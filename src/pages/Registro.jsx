@@ -1,16 +1,18 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
 
 function Registro() {
   const navigate = useNavigate()
 
-  const [usuario, setUsuario] = useState('')
+  const [email, setEmail] = useState('')
   const [contrasena, setContrasena] = useState('')
   const [confirmar, setConfirmar] = useState('')
   const [verContrasena, setVerContrasena] = useState(false)
   const [error, setError] = useState('')
+  const [cargando, setCargando] = useState(false)
 
-  const handleRegistro = () => {
+  const handleRegistro = async () => {
     if (contrasena !== confirmar) {
       setError('Las contraseñas no coinciden')
       return
@@ -19,8 +21,23 @@ function Registro() {
       setError('La contraseña debe tener al menos 6 caracteres')
       return
     }
+
     setError('')
-    alert('Datos correctos. (Aquí conectaremos Supabase después)')
+    setCargando(true)
+
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: contrasena,
+    })
+
+    setCargando(false)
+
+    if (error) {
+      setError(error.message)
+      return
+    }
+
+    navigate('/inicio')
   }
 
   return (
@@ -30,13 +47,13 @@ function Registro() {
           Crear cuenta
         </h2>
 
-        <label className="block text-gray-700 mb-1">Usuario</label>
+        <label className="block text-gray-700 mb-1">Email</label>
         <input
-          type="text"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full px-4 py-2 rounded-xl border border-purple-200 mb-4 focus:outline-none focus:border-purple-400"
-          placeholder="Elige un usuario"
+          placeholder="tucorreo@ejemplo.com"
         />
 
         <label className="block text-gray-700 mb-1">Contraseña</label>
@@ -72,9 +89,10 @@ function Registro() {
 
         <button
           onClick={handleRegistro}
-          className="w-full bg-purple-400 hover:bg-purple-500 text-white font-semibold py-2 rounded-full shadow-md transition-colors cursor-pointer mb-4"
+          disabled={cargando}
+          className="w-full bg-purple-400 hover:bg-purple-500 text-white font-semibold py-2 rounded-full shadow-md transition-colors cursor-pointer mb-4 disabled:opacity-50"
         >
-          Registrarse
+          {cargando ? 'Creando cuenta...' : 'Registrarse'}
         </button>
 
         <p className="text-center text-gray-700 text-sm">

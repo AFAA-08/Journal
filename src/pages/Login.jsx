@@ -1,12 +1,34 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
 
 function Login() {
   const navigate = useNavigate()
 
-  const [usuario, setUsuario] = useState('')
+  const [email, setEmail] = useState('')
   const [contrasena, setContrasena] = useState('')
   const [verContrasena, setVerContrasena] = useState(false)
+  const [error, setError] = useState('')
+  const [cargando, setCargando] = useState(false)
+
+  const handleLogin = async () => {
+    setError('')
+    setCargando(true)
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: contrasena,
+    })
+
+    setCargando(false)
+
+    if (error) {
+      setError('Email o contraseña incorrectos')
+      return
+    }
+
+    navigate('/inicio')
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 via-pink-200 to-sky-200 p-6">
@@ -15,13 +37,13 @@ function Login() {
           Log-in
         </h2>
 
-        <label className="block text-gray-700 mb-1">Usuario</label>
+        <label className="block text-gray-700 mb-1">Email</label>
         <input
-          type="text"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full px-4 py-2 rounded-xl border border-purple-200 mb-4 focus:outline-none focus:border-purple-400"
-          placeholder="Tu usuario"
+          placeholder="tucorreo@ejemplo.com"
         />
 
         <label className="block text-gray-700 mb-1">Contraseña</label>
@@ -42,10 +64,16 @@ function Login() {
           </button>
         </div>
 
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+        )}
+
         <button
-          className="w-full bg-purple-400 hover:bg-purple-500 text-white font-semibold py-2 rounded-full shadow-md transition-colors cursor-pointer mb-4"
+          onClick={handleLogin}
+          disabled={cargando}
+          className="w-full bg-purple-400 hover:bg-purple-500 text-white font-semibold py-2 rounded-full shadow-md transition-colors cursor-pointer mb-4 disabled:opacity-50"
         >
-          Entrar
+          {cargando ? 'Entrando...' : 'Entrar'}
         </button>
 
         <p className="text-center text-gray-700 text-sm">
