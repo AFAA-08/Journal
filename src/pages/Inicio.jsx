@@ -36,6 +36,7 @@ function Inicio() {
   // VISTA 2: El cuaderno abierto con el índice dentro
   return (
     <Cuaderno
+      positsIzquierda={['Índice']}
      izquierda={
         <>
           <h2 className="text-5xl text-black font-lettering mb-4">Índice</h2>
