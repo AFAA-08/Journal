@@ -4,6 +4,7 @@ import QueEs from './pages/QueEs'
 import Login from './pages/Login'
 import Inicio from './pages/Inicio'
 import Registro from './pages/Registro'
+import Listas from './pages/Listas'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/inicio" element={<Inicio />} />
         <Route path="/registro" element={<Registro />} />
+        <Route path="/listas" element={<Listas />} />
       </Routes>
     </BrowserRouter>
   )

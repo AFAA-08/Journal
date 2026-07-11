@@ -94,30 +94,30 @@ function Cuaderno({ izquierda, derecha, positsIzquierda = [] }) {
 
         {/* ===== VERSIÓN COMPUTADORA: dos hojas ===== */}
         <div className="hidden sm:flex">
-          <div className="flex-1 bg-white rounded-l-2xl p-6 min-h-[78vh] flex flex-col shadow-[inset_-12px_0_15px_-12px_rgba(0,0,0,0.3)]">
+          <div className="flex-1 bg-white rounded-l-2xl p-6 h-[650px] overflow-hidden flex flex-col shadow-[inset_-12px_0_15px_-12px_rgba(0,0,0,0.3)]">
             {izquierda}
           </div>
 
-          <div className="flex flex-col justify-around bg-gray-800 w-8 items-center">
+          <div className="flex flex-col justify-around bg-gray-800 w-8 items-center h-[650px]">
             {Array.from({ length: 22 }).map((_, i) => (
               <Anillo key={i} />
             ))}
           </div>
 
-          <div className="flex-1 bg-white rounded-r-2xl p-6 min-h-[78vh] flex flex-col shadow-[inset_12px_0_15px_-12px_rgba(0,0,0,0.3)]">
+          <div className="flex-1 bg-white rounded-r-2xl p-6 h-[650px] overflow-hidden flex flex-col shadow-[inset_12px_0_15px_-12px_rgba(0,0,0,0.3)]">
             {derecha}
           </div>
         </div>
 
         {/* ===== VERSIÓN CELULAR: una sola hoja ===== */}
         <div className="flex sm:hidden">
-          <div className="flex flex-col justify-around py-3">
+          <div className="flex flex-col justify-around h-[650px]">
             {Array.from({ length: 20 }).map((_, i) => (
               <Anillo key={i} />
             ))}
           </div>
 
-          <div className="flex-1 bg-white rounded-r-2xl p-4 min-h-[80vh] flex flex-col">
+          <div className="flex-1 bg-white rounded-r-2xl p-4 h-[650px] overflow-y-auto flex flex-col gap-4">
             {izquierda}
             {derecha}
           </div>

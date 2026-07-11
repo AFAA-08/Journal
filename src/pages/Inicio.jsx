@@ -10,16 +10,20 @@ function Inicio() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 via-pink-200 to-sky-200 p-4">
         <div
           onClick={() => setAbierto(true)}
-          className="cursor-pointer w-full max-w-md"
+          className="cursor-pointer flex flex-col items-center"
         >
+          {/* Anillos arriba */}
           <div className="flex justify-center gap-3 mb-1">
-            {Array.from({ length: 9 }).map((_, i) => (
+            {Array.from({ length: 7 }).map((_, i) => (
               <div key={i} className="w-3 h-6 bg-gray-400 rounded-full shadow-sm"></div>
             ))}
           </div>
 
-          <div className="bg-gradient-to-br from-indigo-400 via-purple-500 to-indigo-700 rounded-2xl shadow-2xl aspect-[3/4] flex items-center justify-center p-6 relative overflow-hidden">
+          {/* Tapa de la portada: alto 650px, ancho tipo una hoja */}
+          <div className="bg-gradient-to-br from-indigo-400 via-purple-500 to-indigo-700 rounded-2xl shadow-2xl h-[720px] w-[520px] max-w-[85vw] flex items-center justify-center p-6 relative overflow-hidden">
+            {/* Luna decorativa */}
             <div className="absolute top-8 right-8 w-16 h-16 bg-yellow-100 rounded-full opacity-80 blur-sm"></div>
+            {/* Etiqueta con el título */}
             <div className="bg-white/90 rounded-lg shadow-lg px-8 py-6 rotate-[-3deg]">
               <h1 className="text-5xl font-bold text-purple-700 font-lettering text-center">
                 Journal
